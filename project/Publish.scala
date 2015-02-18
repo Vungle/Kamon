@@ -19,16 +19,16 @@ import sbt.Keys._
 object Publish {
 
   lazy val settings = Seq(
-    crossPaths := false,
     pomExtra := kamonPomExtra,
     publishTo := kamonRepo,
     organization := "io.kamon",
     pomIncludeRepository := { x => false },
     publishMavenStyle := true,
-    publishArtifact in Test := false
+    publishArtifact in Test := false,
+    credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
   )
 
-  def kamonRepo = Some(Resolver.sftp("Kamon Snapshots Repository", "snapshots.kamon.io", "/var/local/snapshots-repo"))
+  def kamonRepo = Some("Vungle 3rd party repository" at "https://nexus.vungle.com/mnt2/nexus/content/repositories/thirdparty/")
 
   def kamonPomExtra = {
     <url>http://kamon.io</url>
